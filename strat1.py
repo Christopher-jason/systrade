@@ -32,7 +32,7 @@ def MACD():
 
     print(f"MA100: {ma10}, MA200: {ma20}")
 
-    if ma10 > ma20 and check_cash_balance(client, qty * closes[-1]):  # Check if 10 day MA is above 20 day MA
+    if ma10 > ma20:  # Check if 10 day MA is above 20 day MA
         print("Buying signal")
         side = OrderSide.BUY
         timeif = TimeInForce.GTC
