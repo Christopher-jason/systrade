@@ -13,10 +13,9 @@ from alpaca.data.timeframe import TimeFrame
 from Orders import Orders
 
 
-
-
-
 def MACD():
+
+    order = Orders()
 
     sym = 'TSLA'
     qty = 100
@@ -25,7 +24,7 @@ def MACD():
     #Get data
     data = pd.read_csv('hourly_bars.csv')
     # Convert to DataFrame for easier manipulation
-    closes = data['price'].values
+    closes = data['close'].values
     # Calculate moving averages
     ma10 = np.mean(closes[-300:])  # Last 10 data points
     ma20 = np.mean(closes[-500:])  # Last 20 data points
@@ -38,7 +37,7 @@ def MACD():
         timeif = TimeInForce.GTC
         o_id = 'Buy_at ' + str(closes[-1])
 
-        if Orders.check_portfolio(side, sym, qty * closes[-1]):
+        if order.check_portfolio(side=side, sym=sym, cost=qty * closes[-1]):
             buy_order = Orders.limit_order(sym,qty,side,timeif,o_id, closes[-1])
             client.submit_order(order_data=buy_order)
             print(buy_order.client_order_id)
@@ -51,7 +50,7 @@ def MACD():
         timeif = TimeInForce.GTC
         o_id = 'Sell_at ' + str(closes[-1])
 
-        if Orders.check_portfolio(side, sym, qty * closes[-1]):
+        if order.check_portfolio(side=side, sym=sym, cost=qty * closes[-1]):
             sell_order = Orders.limit_order(sym,qty,side,timeif,o_id,closes[-1])
             client.submit_order(order_data=sell_order)
             print(sell_order.client_order_id)

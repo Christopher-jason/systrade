@@ -4,11 +4,15 @@ from alpaca.trading.enums import OrderSide
 import config
 
 class Orders:
-    client = TradingClient(config.API_KEY, config.SECRET_KEY, paper=True)
+    def __init__(self):
+        self.client = TradingClient(config.API_KEY, config.SECRET_KEY, paper=True)
+
 
     def check_cash_balance(self, cost):
         #check if order can be placed
-        if self.client.cash >= cost:
+        account = self.client.get_account()
+        cash = account.cash
+        if cash >= cost:
             return True
         else:
             return False 
