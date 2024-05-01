@@ -16,15 +16,19 @@ csv_file_path = 'tsla_live_prices.csv'
 
 # Function to handle trade updates
 # Continue from where the function to handle trade updates is defined
-async def trade_update_handler(t):
+async def trade_update_handler(d):
     global df
     # Check if the symbol is TSLA
-    if t.symbol == 'TSLA':
+    if d.symbol == 'TSLA':
         # Extract price and timestamp
         new_data = pd.DataFrame({
-            'symbol': [t.symbol],
-            'price': [t.price],
-            'timestamp': [t.timestamp]
+            'symbol': [d.symbol],
+            'timestamp': [d.timestamp],
+            'open': [d.open],
+            'high': [d.high],
+            'low': [d.low],
+            'price': [d.close],
+
         })
         # Append to the DataFrame
         df = pd.concat([df, new_data], ignore_index=True)
