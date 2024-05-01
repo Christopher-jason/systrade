@@ -24,6 +24,7 @@ def check_cash_balance(client,cost):
 
 def check_portfolio(client, side):
     portfolio = client.get_open_position()
+    #Need to check if postion exist and make trade accordingly
     for postion in portfolio:
         if postion.symbol == 'TSLA' and postion.qty > side:
             print("Don't buy, i guess!!")
