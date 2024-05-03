@@ -14,8 +14,10 @@ API_SECRET = config.SECRET_KEY
 BASE_URL = 'wss://stream.data.alpaca.markets/v2/iex'  # Adjust if necessary
 
 # Initialize DataFrame from historical data and drop specified columns
-df = pd.read_csv('Hist_data_TSLA.csv')
-df = df.drop(columns=['trade_count', 'vwap'])
+#df = pd.read_csv('Hist_data_TSLA.csv')
+#df = df.drop(columns=['trade_count', 'vwap'])
+
+df = pd.read_csv('hourly_bars.csv')
 
 # Asynchronous function to handle incoming bar data
 async def bar_handler(bar):

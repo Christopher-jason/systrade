@@ -30,6 +30,7 @@ def MACD():
     ma20 = np.mean(closes[-500:])  # Last 20 data points
 
     print(f"MA100: {ma10}, MA200: {ma20}")
+    cost = qty * float(closes[-1])
 
     if ma10 > ma20:  # Check if 10 day MA is above 20 day MA
         print("Buying signal")
@@ -37,7 +38,7 @@ def MACD():
         timeif = TimeInForce.GTC
         o_id = 'Buy_at ' + str(closes[-1])
 
-        if order.check_portfolio(side=side, sym=sym, cost=qty * closes[-1]):
+        if order.check_portfolio(side=side, sym=sym, cost=cost):
             buy_order = Orders.limit_order(sym,qty,side,timeif,o_id, closes[-1])
             client.submit_order(order_data=buy_order)
             print(buy_order.client_order_id)
@@ -50,7 +51,7 @@ def MACD():
         timeif = TimeInForce.GTC
         o_id = 'Sell_at ' + str(closes[-1])
 
-        if order.check_portfolio(side=side, sym=sym, cost=qty * closes[-1]):
+        if order.check_portfolio(side=side, sym=sym, cost=cost):
             sell_order = Orders.limit_order(sym,qty,side,timeif,o_id,closes[-1])
             client.submit_order(order_data=sell_order)
             print(sell_order.client_order_id)
@@ -60,7 +61,7 @@ def MACD():
 try:
     while True:
         MACD()
-        time.sleep(300)  # Correct function call to sleep
+        time.sleep(3600)  # Correct function call to sleep
 except KeyboardInterrupt:
     print("MACD stopped manually")
 

@@ -11,7 +11,7 @@ class Orders:
     def check_cash_balance(self, cost):
         #check if order can be placed
         account = self.client.get_account()
-        cash = account.cash
+        cash = float(account.cash)
         if cash >= cost:
             return True
         else:
