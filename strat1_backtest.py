@@ -10,7 +10,7 @@ from alpaca.trading.enums import OrderSide, TimeInForce
 from Orders import Orders
 
 
-def MACD():
+def MACD(data):
 
     order = Orders()
 
@@ -18,8 +18,6 @@ def MACD():
     qty = 100
     client = TradingClient(config.API_KEY, config.SECRET_KEY, paper=True)
 
-    #Get data
-    data = pd.read_csv('hourly_bars.csv')
     # Convert to DataFrame for easier manipulation
     closes = data['close'].values
     # Calculate moving averages
@@ -54,11 +52,6 @@ def MACD():
             print(sell_order.client_order_id)
         
 
+data = pd.read_csv('Hist_data_TSLA.csv')
 
-try:
-    while True:
-        MACD()
-        time.sleep(3600)  # Correct function call to sleep
-except KeyboardInterrupt:
-    print("MACD stopped manually")
 
